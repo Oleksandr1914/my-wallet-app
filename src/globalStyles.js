@@ -1,4 +1,6 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
+import { device } from './utils/mixins';
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -58,4 +60,22 @@ select:-webkit-autofill:focus {
   
   transition: background-color 5000s ease-in-out 0s;
 }
+`;
+
+export const Container = styled.div`
+  width: 100%;
+  padding: 10px 15px;
+  ${device.mobile} {
+    margin: 0 auto;
+    width: 480px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  ${device.tablet} {
+    width: 768px;
+    padding: 20px 40px;
+  }
+  ${device.desktop} {
+    width: 1280px;
+  }
 `;

@@ -1,14 +1,17 @@
-import { GlobalStyle } from './globalStyles';
+import { Container, GlobalStyle } from './globalStyles';
 import Background from './components/Background/Background';
 import Header from './components/Header/Header';
+import Form from './components/Form/Form';
 
 function App() {
   return (
     <>
       <GlobalStyle />
       <Background>
-        <Header />
-        <p>children </p>
+        <Container>
+          <Header />
+          <Form />
+        </Container>
       </Background>
     </>
   );

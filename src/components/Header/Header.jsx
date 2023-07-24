@@ -1,13 +1,18 @@
 import Logo from '../../assets/log.png';
-import { HeaderContainer, LogoImg, ConnectBlock } from './Header.styled';
+import {
+  HeaderContainer,
+  TextContent,
+  LogoImg,
+  ConnectBlock,
+} from './Header.styled';
 
 const Header = () => {
   return (
     <HeaderContainer>
       <LogoImg src={Logo} alt="logo" />
       <ConnectBlock>
-        <span>0.654</span>
-        <span>wew87q98eq</span>
+        <TextContent>0.654</TextContent>
+        <TextContent>we7q98eq</TextContent>
       </ConnectBlock>
     </HeaderContainer>
   );
