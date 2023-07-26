@@ -33,6 +33,10 @@ export const ConnectBlock = styled.div`
   ${device.tablet} {
     padding: 4px 12px;
   }
+  & button {
+    color: #e2e8f0;
+    background-color: transparent;
+  }
 `;
 
 export const TextContent = styled.span`

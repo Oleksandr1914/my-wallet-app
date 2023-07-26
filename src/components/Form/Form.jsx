@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
   FormBox,
   FormContainer,
@@ -6,20 +7,60 @@ import {
   TextLabel,
   Title,
 } from './Form.styled';
+import { useEthersContext } from '../../hook/useEthersContext';
+import { formatEther, parseEther, parseUnits } from 'ethers';
 
 const Form = () => {
+  const { signer } = useEthersContext();
+  const [receiverAddress, setReceiverAddress] = useState('');
+  const [tokenAmount, setTokenAmount] = useState('');
+
+  const handleTransfer = async e => {
+    e.preventDefault();
+    console.log(receiverAddress, tokenAmount);
+    setReceiverAddress('');
+    setTokenAmount('');
+    try {
+      const tx = await signer.sendTransaction({
+        to: receiverAddress,
+        value: parseEther(tokenAmount),
+      });
+
+      // Often you may wish to wait until the transaction is mined
+      const receipt = await tx.wait();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    console.log(signer);
+  }, [signer]);
+
   return (
     <FormContainer>
-      <Title>Connect to wallet</Title>
+      <Title>Transport token</Title>
+
       <FormBox>
         <Label>
-          <TextLabel>Wallet address:</TextLabel>
-          <Input type="text" name="token" />
+          <TextLabel>Receiver Address:</TextLabel>
+          <Input
+            type="text"
+            placeholder="Receiver Address"
+            value={receiverAddress}
+            onChange={e => setReceiverAddress(e.target.value)}
+          />
         </Label>
         <Label>
-          <TextLabel>Balans:</TextLabel>
-          <Input type="number" name="balans" />
+          <TextLabel>Token Amount:</TextLabel>
+          <Input
+            type="number"
+            placeholder="Token Amount"
+            value={tokenAmount}
+            onChange={e => setTokenAmount(e.target.value)}
+          />
         </Label>
+        <button onClick={e => handleTransfer(e)}>Transfer</button>
       </FormBox>
     </FormContainer>
   );
