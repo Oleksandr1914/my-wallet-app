@@ -4,15 +4,19 @@ import { device } from '../../utils/mixins';
 export const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 export const LogoImg = styled.img`
   width: 120px;
+  height: 30px;
   ${device.mobile} {
     width: 160px;
+    height: 40px;
   }
   ${device.tablet} {
     width: 200px;
+    height: 50px;
   }
   ${device.desktop} {
     width: 240px;
@@ -24,7 +28,7 @@ export const ConnectBlock = styled.div`
   align-items: center;
   justify-content: center;
   gap: 4px;
-  padding: 2px 4px;
+  padding: 4px 6px;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   ${device.mobile} {
@@ -34,6 +38,7 @@ export const ConnectBlock = styled.div`
     padding: 4px 12px;
   }
   & button {
+    padding: 4px 6px;
     color: #e2e8f0;
     background-color: transparent;
   }
@@ -66,5 +71,6 @@ export const TextModal = styled.p`
 
 export const ButtonModal = styled.button`
   margin-top: 50px;
+  color: #000000;
   background-color: #f19c5e;
 `;

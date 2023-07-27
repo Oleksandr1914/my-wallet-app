@@ -53,7 +53,6 @@ const Header = () => {
   return (
     <HeaderContainer>
       <LogoImg src={Logo} alt="logo" />
-
       <ConnectBlock>
         {data.length === 0 ? (
           <button onClick={connectWallet}>Connect Wallet</button>
@@ -64,7 +63,7 @@ const Header = () => {
           </>
         )}
       </ConnectBlock>
-      <Modal
+      {/* <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
         contentLabel="Install MetaMask Modal"
@@ -96,7 +95,7 @@ const Header = () => {
           </TextModal>
           <ButtonModal onClick={() => setModalIsOpen(false)}>Close</ButtonModal>
         </ModalContainer>
-      </Modal>
+      </Modal> */}
     </HeaderContainer>
   );
 };
