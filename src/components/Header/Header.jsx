@@ -12,6 +12,7 @@ import { ethers, formatEther, parseEther } from 'ethers';
 import { useEthersContext } from '../../hook/useEthersContext';
 import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
+import { formatNumberBalance, reformatString } from '../../hoc/formating';
 
 const Header = () => {
   const [data, setData] = useState([]);
@@ -28,17 +29,18 @@ const Header = () => {
 
   const connectWallet = async () => {
     if (window.ethereum == null) {
-      console.log('MetaMask not installed');
+      alert('MetaMask not installed');
       showInstallMetaMaskMessage();
       const provider = ethers.getDefaultProvider();
     } else {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const accounts = await provider.send('eth_requestAccounts', []);
       const balance = await provider.getBalance(accounts[0]);
-      setAccounts(accounts);
-      setBalance(formatEther(balance));
-      console.log({ accounts, balance });
-      console.log(formatEther(balance));
+      const number = formatEther(balance);
+      const formattedNumber = formatNumberBalance(number);
+      const string = reformatString(accounts[0]);
+      setAccounts(string);
+      setBalance(formattedNumber);
       const signer = await provider.getSigner();
       setSigner(signer);
       setData(accounts);

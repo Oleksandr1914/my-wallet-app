@@ -5,19 +5,20 @@ export const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10px 30px;
+  padding-bottom: 40px;
   margin: 80px auto;
   width: 100%;
-  height: 340px;
+  min-height: 340px;
   border: 2px solid #e2e8f0;
   border-radius: 12px;
   ${device.tablet} {
     padding-top: 20px;
     width: 480px;
-    height: 360px;
+    min-height: 360px;
   }
   ${device.desktop} {
     width: 600px;
-    height: 420px;
+    min-height: 420px;
   }
 `;
 
@@ -44,7 +45,7 @@ export const FormBox = styled.form`
 export const Label = styled.label`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  /* gap: 10px; */
 `;
 
 export const TextLabel = styled.p`
@@ -63,6 +64,7 @@ export const TextLabel = styled.p`
 `;
 
 export const Input = styled.input`
+  margin-top: 8px;
   padding: 4px 6px;
   font-weight: 400;
   font-size: 16px;
@@ -98,4 +100,11 @@ export const ButtonForm = styled.button`
 export const SpinerContainer = styled.div`
   margin: 0 auto;
   margin-top: 25px;
+`;
+
+export const ErrorForm = styled.div`
+  margin-top: 2px;
+  font-weight: 400;
+  font-size: 14px;
+  color: #b40909;
 `;

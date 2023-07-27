@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   ButtonForm,
+  ErrorForm,
   FormBox,
   FormContainer,
   Input,
@@ -10,8 +11,9 @@ import {
   Title,
 } from './Form.styled';
 import { useEthersContext } from '../../hook/useEthersContext';
-import { formatEther, parseEther, parseUnits } from 'ethers';
+import { parseEther } from 'ethers';
 import { ThreeCircles } from 'react-loader-spinner';
+import { useFormik } from 'formik';
 
 const Form = () => {
   const { signer } = useEthersContext();
@@ -19,56 +21,85 @@ const Form = () => {
   const [tokenAmount, setTokenAmount] = useState('');
   const [loader, setLoader] = useState(false);
 
-  const handleTransfer = async e => {
-    e.preventDefault();
+  const handleTransfer = async () => {
     setLoader(true);
-    console.log(receiverAddress, tokenAmount);
-    setReceiverAddress('');
-    setTokenAmount('');
     try {
       const tx = await signer.sendTransaction({
         to: receiverAddress,
         value: parseEther(tokenAmount),
       });
 
-      // Often you may wish to wait until the transaction is mined
       const receipt = await tx.wait();
       if (receipt) {
         setLoader(false);
       }
-      console.log('receipt', receipt);
     } catch (error) {
       setLoader(false);
       console.error(error);
     }
   };
 
-  useEffect(() => {
-    console.log(signer);
-  }, [signer]);
+  const validate = values => {
+    const errors = {};
+    const minValue = 0.000001;
+    if (!values.token) {
+      errors.token = 'Required';
+    } else if (values.token < minValue) {
+      errors.token = 'Very small number!!';
+    }
+
+    if (!values.address) {
+      errors.address = 'Required';
+    } else if (!/^[0][x][0-9A-Fa-f]{40}$/.test(values.address)) {
+      errors.address = 'Invalid Receiver Address';
+    }
+
+    return errors;
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      address: '',
+      token: '',
+    },
+    validate,
+    onSubmit: values => {
+      setReceiverAddress(values.address);
+      setTokenAmount(String(parseFloat(values.token)));
+      handleTransfer();
+    },
+  });
 
   return (
     <FormContainer>
       <Title>Transport token</Title>
 
-      <FormBox>
-        <Label>
+      <FormBox onSubmit={formik.handleSubmit}>
+        <Label htmlFor="address">
           <TextLabel>Receiver Address:</TextLabel>
           <Input
+            name="address"
             type="text"
-            placeholder="Receiver Address"
-            value={receiverAddress}
-            onChange={e => setReceiverAddress(e.target.value)}
+            value={formik.values.address}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
+          {formik.touched.address && formik.errors.address ? (
+            <ErrorForm>{formik.errors.address}</ErrorForm>
+          ) : null}
         </Label>
         <Label>
-          <TextLabel>Token Amount:</TextLabel>
+          <TextLabel htmlFor="token">Token Amount:</TextLabel>
           <Input
+            name="token"
             type="number"
-            placeholder="Token Amount"
-            value={tokenAmount}
-            onChange={e => setTokenAmount(e.target.value)}
+            value={formik.values.token}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
+          {formik.touched.token && formik.errors.token ? (
+            <ErrorForm>{formik.errors.token}</ErrorForm>
+          ) : null}
         </Label>
         {loader ? (
           <SpinerContainer>
@@ -86,7 +117,7 @@ const Form = () => {
             />
           </SpinerContainer>
         ) : (
-          <ButtonForm onClick={e => handleTransfer(e)}>Transfer</ButtonForm>
+          <ButtonForm type="submit">Transfer</ButtonForm>
         )}
       </FormBox>
     </FormContainer>
