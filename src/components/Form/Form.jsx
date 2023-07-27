@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
+  ButtonForm,
   FormBox,
   FormContainer,
   Input,
@@ -60,7 +61,7 @@ const Form = () => {
             onChange={e => setTokenAmount(e.target.value)}
           />
         </Label>
-        <button onClick={e => handleTransfer(e)}>Transfer</button>
+        <ButtonForm onClick={e => handleTransfer(e)}>Transfer</ButtonForm>
       </FormBox>
     </FormContainer>
   );

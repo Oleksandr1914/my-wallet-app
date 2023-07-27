@@ -85,3 +85,12 @@ export const Input = styled.input`
     font-size: 22px;
   }
 `;
+
+export const ButtonForm = styled.button`
+  margin-top: 25px;
+  color: #e2e8f0;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.2;
+  background-color: #c27202;
+`;

@@ -45,3 +45,26 @@ export const TextContent = styled.span`
   line-height: 1.2;
   color: #e2e8f0;
 `;
+
+export const ModalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding-top: 40px;
+  width: 100%;
+`;
+
+export const TextModal = styled.p`
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.2;
+  color: #000000;
+  & a {
+    color: #0453f6;
+  }
+`;
+
+export const ButtonModal = styled.button`
+  margin-top: 50px;
+  background-color: #f19c5e;
+`;

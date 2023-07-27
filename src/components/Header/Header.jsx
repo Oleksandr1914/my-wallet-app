@@ -4,6 +4,9 @@ import {
   TextContent,
   LogoImg,
   ConnectBlock,
+  ModalContainer,
+  TextModal,
+  ButtonModal,
 } from './Header.styled';
 import { ethers, formatEther } from 'ethers';
 import { useEthersContext } from '../../hook/useEthersContext';
@@ -66,35 +69,33 @@ const Header = () => {
         onRequestClose={() => setModalIsOpen(false)}
         contentLabel="Install MetaMask Modal"
       >
-        <div>
-          <p>
+        <ModalContainer>
+          <TextModal>
             Please install MetaMask from the App Store (iOS) or Google Play
             Store (Android) to connect your wallet.
-          </p>
-          <p>
+          </TextModal>
+          <TextModal>
             <a
               href="https://apps.apple.com/ua/developer/metamask/id1438144201"
               target="_blank"
               rel="noopener noreferrer"
               lang="en"
             >
-              App Store (iOS) -
-              https://apps.apple.com/ua/developer/metamask/id1438144201
+              App Store (iOS)
             </a>
-          </p>
-          <p>
+          </TextModal>
+          <TextModal>
             <a
               href="https://play.google.com/store/apps/details?id=io.metamask&hl=ru&gl=US"
               target="_blank"
               rel="noopener noreferrer"
               lang="en"
             >
-              Google Play Store (Android) -
-              https://play.google.com/store/apps/details?id=io.metamask&hl=ru&gl=US
+              Google Play Store (Android)
             </a>
-          </p>
-          <button onClick={() => setModalIsOpen(false)}>Close</button>
-        </div>
+          </TextModal>
+          <ButtonModal onClick={() => setModalIsOpen(false)}>Close</ButtonModal>
+        </ModalContainer>
       </Modal>
     </HeaderContainer>
   );
