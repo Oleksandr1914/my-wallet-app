@@ -8,42 +8,19 @@ import {
 import { ethers, formatEther } from 'ethers';
 import { useEthersContext } from '../../hook/useEthersContext';
 import { useEffect, useState } from 'react';
+import Modal from 'react-modal';
 
 const Header = () => {
   const [data, setData] = useState([]);
   const [balance, setBalance] = useState(null);
   const [accounts, setAccounts] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const { setSigner } = useEthersContext();
 
   const isMobileDevice = /Mobi/i.test(window.navigator.userAgent);
 
   const showInstallMetaMaskMessage = () => {
-    alert(
-      <>
-        Please install MetaMask from the App Store (iOS) or Google Play Store
-        (Android) to connect your wallet.
-        <br />
-        <a
-          href="https://apps.apple.com/ua/developer/metamask/id1438144201"
-          target="_blank"
-          rel="noopener noreferrer"
-          lang="en"
-        >
-          App Store (iOS) -
-          https://apps.apple.com/ua/developer/metamask/id1438144201
-        </a>
-        <br />
-        <a
-          href="https://play.google.com/store/apps/details?id=io.metamask&hl=ru&gl=US"
-          target="_blank"
-          rel="noopener noreferrer"
-          lang="en"
-        >
-          Google Play Store (Android) -
-          https://play.google.com/store/apps/details?id=io.metamask&hl=ru&gl=US
-        </a>
-      </>
-    );
+    setModalIsOpen(true);
   };
 
   const connectWallet = async () => {
@@ -84,6 +61,41 @@ const Header = () => {
           </>
         )}
       </ConnectBlock>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        contentLabel="Install MetaMask Modal"
+      >
+        <div>
+          <p>
+            Please install MetaMask from the App Store (iOS) or Google Play
+            Store (Android) to connect your wallet.
+          </p>
+          <p>
+            <a
+              href="https://apps.apple.com/ua/developer/metamask/id1438144201"
+              target="_blank"
+              rel="noopener noreferrer"
+              lang="en"
+            >
+              App Store (iOS) -
+              https://apps.apple.com/ua/developer/metamask/id1438144201
+            </a>
+          </p>
+          <p>
+            <a
+              href="https://play.google.com/store/apps/details?id=io.metamask&hl=ru&gl=US"
+              target="_blank"
+              rel="noopener noreferrer"
+              lang="en"
+            >
+              Google Play Store (Android) -
+              https://play.google.com/store/apps/details?id=io.metamask&hl=ru&gl=US
+            </a>
+          </p>
+          <button onClick={() => setModalIsOpen(false)}>Close</button>
+        </div>
+      </Modal>
     </HeaderContainer>
   );
 };
