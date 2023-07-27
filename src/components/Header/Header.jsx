@@ -19,7 +19,10 @@ const Header = () => {
 
   const showInstallMetaMaskMessage = () => {
     alert(
-      'Please install MetaMask from the App Store (iOS) or Google Play Store (Android) to connect your wallet.'
+      `Please install MetaMask from the App Store (iOS) or Google Play Store (Android) to connect your wallet.
+      App Store (iOS) - https://apps.apple.com/ua/developer/metamask/id1438144201
+      Google Play Store (Android) - https://play.google.com/store/apps/details?id=io.metamask&hl=ru&gl=US
+      `
     );
   };
 
