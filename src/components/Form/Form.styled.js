@@ -94,3 +94,8 @@ export const ButtonForm = styled.button`
   line-height: 1.2;
   background-color: #c27202;
 `;
+
+export const SpinerContainer = styled.div`
+  margin: 0 auto;
+  margin-top: 25px;
+`;
