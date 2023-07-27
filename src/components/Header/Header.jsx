@@ -15,9 +15,18 @@ const Header = () => {
   const [accounts, setAccounts] = useState(null);
   const { setSigner } = useEthersContext();
 
+  const isMobileDevice = /Mobi/i.test(window.navigator.userAgent);
+
+  const showInstallMetaMaskMessage = () => {
+    alert(
+      'Please install MetaMask from the App Store (iOS) or Google Play Store (Android) to connect your wallet.'
+    );
+  };
+
   const connectWallet = async () => {
     if (window.ethereum == null) {
-      console.log('MetaMask not installed; using read-only defaults');
+      console.log('MetaMask not installed');
+      showInstallMetaMaskMessage();
       const provider = ethers.getDefaultProvider();
     } else {
       const provider = new ethers.BrowserProvider(window.ethereum);
@@ -31,9 +40,13 @@ const Header = () => {
       setData(accounts);
     }
   };
+
   useEffect(() => {
-    console.log(data.length);
-  }, [data]);
+    if (isMobileDevice && window.ethereum == null) {
+      showInstallMetaMaskMessage();
+    }
+  }, []);
+
   return (
     <HeaderContainer>
       <LogoImg src={Logo} alt="logo" />
