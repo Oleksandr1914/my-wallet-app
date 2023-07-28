@@ -17,16 +17,14 @@ import { useFormik } from 'formik';
 
 const Form = () => {
   const { signer } = useEthersContext();
-  const [receiverAddress, setReceiverAddress] = useState('');
-  const [tokenAmount, setTokenAmount] = useState('');
   const [loader, setLoader] = useState(false);
 
-  const handleTransfer = async () => {
+  const handleTransfer = async (token, address) => {
     setLoader(true);
     try {
       const tx = await signer.sendTransaction({
-        to: receiverAddress,
-        value: parseEther(tokenAmount),
+        to: address,
+        value: parseEther(token),
       });
 
       const receipt = await tx.wait();
@@ -63,10 +61,10 @@ const Form = () => {
       token: '',
     },
     validate,
-    onSubmit: values => {
-      setReceiverAddress(values.address);
-      setTokenAmount(String(parseFloat(values.token)));
-      handleTransfer();
+    onSubmit: (values, { resetForm }) => {
+      const string = String(values.token);
+      handleTransfer(string, values.address);
+      resetForm();
     },
   });
 
